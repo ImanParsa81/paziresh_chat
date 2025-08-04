@@ -7,7 +7,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const idClient = urlParams.get('id_client');
 
-        user_id_connect_to_socket = idClient.trim();
+        const user_id_connect_to_socket = (idClient && idClient.trim()) ? idClient.trim() : '0';
 
         // save id in section
         sessionStorage.setItem('id_client', user_id_connect_to_socket);
