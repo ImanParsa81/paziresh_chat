@@ -1,12 +1,15 @@
 <script>
     jQuery(document).ready(function ($) {
 
-        // 6eb14e4f-e0dc-4497-b327-c525ae962338
 
         // دریافت ایدی کاربر از url
         const urlParams = new URLSearchParams(window.location.search);
-        const idClient = urlParams.get('id_client');
+        let idClient = urlParams.get('id_client');
 
+        // idClient = "doctor_6eb14e4f-e0dc-4497-b327-c525ae962338";
+
+        idClient = idClient.replace("doctor_", "");
+        console.log( idClient );
         const user_id_connect_to_socket = (idClient && idClient.trim()) ? idClient.trim() : '0';
 
         // save id in section
