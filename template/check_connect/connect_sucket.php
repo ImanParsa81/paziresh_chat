@@ -214,29 +214,17 @@
                 else if (data.message_mode == "new_message")
                 {
 
-                    // دریافت پیام جدید
 
+
+
+                    // test -------------------------------------------
+                    // sessionStorage.clear('array_user_pv');
+                    // test -------------------------------------------
+
+                    // دریافت session
                     let array_user_pv = JSON.parse(sessionStorage.getItem('array_user_pv'));
 
-                    // اگر خالی نبود
-
-                    if (!array_user_pv || array_user_pv.length === 0) {
-
-                        array_user_pv = [];
-                        let user_pv = {
-                            name: data.conversations[0].sender_name,
-                            id: data.conversations[0].sender_id,
-                            messages: []
-                        }
-                        array_user_pv.push(user_pv);
-                    }
-
-
-                    console.log("-----------")
-                    console.log(array_user_pv)
-                    console.log("-----------")
-
-                    sessionStorage.setItem('array_user_pv', JSON.stringify(array_user_pv));
+                    // دریافت اطلاعات ارسال شده
 
                     let sender_id = data.conversations[0].sender_id;
                     let sender_name = data.conversations[0].sender_name;
@@ -248,33 +236,50 @@
                     let _new_or_old_ = sender_message[0].new_or_old;
                     let _role_ = sender_message[0].role;
 
+                    // متغییر بررسی pv وجود دارد یا خیر
+                    // حالت دیفالت وجود ندارد
+
                     let find_pv = false;
 
-                    array_user_pv.forEach(function (item_, key_) {
-                        if (sender_id == item_.id) {
 
-                            find_pv = true;
+                    // ایا pv وجود دارد یا خیر
 
-                            item_.messages.push({
-                                message_id: _message_id_,
-                                text: _text_,
-                                timestamp: _timestamp_,
-                                new_or_old: _new_or_old_,
-                                role: _role_
-                            });
-                        }
-                    })
+                    if (!array_user_pv || array_user_pv.length === 0) {   // ایا خالی است
 
-                    sessionStorage.setItem('array_user_pv', JSON.stringify(array_user_pv));
+                        find_pv = false;
+
+                    } else if ( Array.isArray(array_user_pv) ) {     // ایا ارایه است
+
+                        array_user_pv.forEach(function (item_, key_) {   // ایا در ارایه pv وجود دارد
+
+                            if (sender_id == item_.id) {
+                                find_pv = true;
+
+                                item_.messages.push({
+                                    message_id: _message_id_,
+                                    text: _text_,
+                                    timestamp: _timestamp_,
+                                    new_or_old: _new_or_old_,
+                                    role: _role_
+                                });
+
+                                sessionStorage.setItem('array_user_pv', JSON.stringify(array_user_pv));
+
+                            }
+                        })
+                    }
+
 
                     // اگر پیوی وجود داشت
                     // اگر وجود نداشت یک پیوی بساز
-                    if (find_pv == true) {
 
+                    if (find_pv == true)
+                    {
                         // بررسی این که ایا فکوس هیتیم روی پیوی یا خیر
                         // اگر فوکوس نکردی دانتر براش بنداز
 
                         var id_pv = $(".chat-header").attr("id_pv");
+
                         if (id_pv == sender_id) {
                             creat_message(_role_, _text_, _new_or_old_, _message_id_, sender_id)
                         } else {
@@ -286,11 +291,15 @@
                             hiden_finction_pv(sender_id)
                         }
 
-                    } else {
-
+                    }
+                    else
+                    {
                         let array_user_pv = JSON.parse(sessionStorage.getItem('array_user_pv'));
+                        if (!array_user_pv || array_user_pv.length === 0) {
+                            array_user_pv = [];
+                        }
 
-                        array_user_pv.push({
+                            array_user_pv.push({
                             name: sender_name,
                             id: sender_id,
                             messages: []
@@ -313,6 +322,10 @@
                         creat_vp(sender_name, sender_id, _text_, 1)
                     }
 
+
+                    // test -------------------------------------------
+                    // sessionStorage.clear('array_user_pv');
+                    // test -------------------------------------------
 
                 }
 
