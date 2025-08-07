@@ -22,7 +22,6 @@ jQuery(document).ready(function ($) {
         $(".screen_black").removeClass("active");
     })
 
-
 // دکتر وقتی که پیام ارسال میکنه
 
     // نوشتن پیام
@@ -121,6 +120,68 @@ jQuery(document).ready(function ($) {
     function sin_message (data) {
         $(`.${data.id_chat}`).removeClass(`dont_Sin`);
     }
+
+// -----------------------------------------------------------
+// دکتر وقتی که پیام ارسال میکنه
+
+    // OPEN
+
+    // $(".messages-container").on("click",".container_image_message img", function () {
+    //     let get_url_image = $(this).attr("src");
+    //     $(".container_show_image").addClass("active");
+    //     $(" .container_show_image img").attr("src", get_url_image);
+    // })
+    //
+    //
+    // var $img = $('.container_image .main_image');
+    // var $loader = $('.container_image .loader');
+    //
+    // $img.on('load', function () {
+    //     $loader.hide();
+    //     $img.fadeIn(200); // نرمی برای نمایش عکس
+    // });
+
+
+
+    $(".messages-container").on("click", ".container_image_message img", function () {
+        let get_url_image = $(this).attr("src");
+        $(".container_show_image").addClass("active");
+
+        // متغیرها رو تعریف می‌کنیم (درست مثل قبل)
+        var $img = $(".container_show_image .main_image");
+        var $loader = $(".container_show_image .loader");
+
+        // عکس رو مخفی کن و لودر رو نشون بده:
+        $img.hide();
+        $loader.show();
+
+        // حالا سورس عکس رو تغییر بده:
+        $img.attr("src", get_url_image);
+    });
+
+// فقط یکبار لازم داری این رو ست کنی (بارگزاری اولیه)
+    var $img = $(".container_show_image .main_image");
+    var $loader = $(".container_show_image .loader");
+
+    $img.on('load', function () {
+        $loader.hide();
+        $img.fadeIn(200);
+    });
+
+
+    // CLOSE
+
+    $(".container_image svg").on("click", function () {
+        $(".container_show_image").removeClass("active");
+    })
+
+    $(".container_show_image").on("click", function (e) {
+        if ( this === e.target ) {
+            $(".container_show_image").removeClass("active");
+        }
+    })
+
+
 
 
 })

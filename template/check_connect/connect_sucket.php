@@ -2,6 +2,10 @@
     jQuery(document).ready(function ($) {
 
 
+        // حالت تست
+        let test_mode = false;
+
+
         // دریافت ایدی کاربر از url
         const urlParams = new URLSearchParams(window.location.search);
         let idClient = urlParams.get('id_client');
@@ -25,34 +29,50 @@
         });
 
         socket.on('connect', () => {
-            socket.emit('register', user_id_connect_to_socket);
-            mode_connect_func("suc");
 
-            $(".container_check_connection #iconSymbol").html("✓");
-            $(".container_check_connection .status-icon").addClass("connected");
-            $(".container_check_connection .status-message").html("اتصال با موفقیت انجام شد");
 
-            setTimeout(function () {
-                $(".container_check_connection #iconSymbol").html("📩");
-                $(".container_check_connection .status-icon").addClass("get_message");
-                $(".container_check_connection .status-message").html("درحال دریافت پیام ها");
+            //  ایا روی حات تست مود هستم یا خیر
 
-                //  در خواست به n8n برای این که چت هارا ارسال کند
-                callApi(
-                    'https://n8n.nirweb.ir/webhook/get_first_chat',
-                    'POST',
-                    {user_id: user_id_connect_to_socket.trim(), type_res: 'get_all_message'}
-                )
-                    .then(data => {
-                        if (data.res && data.res.length > 0) {
-                            if (data.res == "fail") {
-                                mode_connect_func("Err");
+
+            if ( test_mode == false )
+            {
+
+                socket.emit('register', user_id_connect_to_socket);
+                mode_connect_func("suc");
+
+                $(".container_check_connection #iconSymbol").html("✓");
+                $(".container_check_connection .status-icon").addClass("connected");
+                $(".container_check_connection .status-message").html("اتصال با موفقیت انجام شد");
+
+                setTimeout(function () {
+                    $(".container_check_connection #iconSymbol").html("📩");
+                    $(".container_check_connection .status-icon").addClass("get_message");
+                    $(".container_check_connection .status-message").html("درحال دریافت پیام ها");
+
+                    //  در خواست به n8n برای این که چت هارا ارسال کند
+                    callApi(
+                        'https://n8n.nirweb.ir/webhook/get_first_chat',
+                        'POST',
+                        {user_id: user_id_connect_to_socket.trim(), type_res: 'get_all_message'}
+                    )
+                        .then(data => {
+                            if (data.res && data.res.length > 0) {
+                                if (data.res == "fail") {
+                                    mode_connect_func("Err");
+                                }
                             }
-                        }
-                    })
-                    .catch(err => console.error(err));
+                        })
+                        .catch(err => console.error(err));
 
-            }, 1000);
+                }, 1000);
+
+            }
+            else
+            {
+
+                $(".container_check_connection").removeClass("active");
+
+            }
 
         });
 
@@ -119,8 +139,6 @@
 
                     break;
             }
-
-
         }
 
 
@@ -299,7 +317,7 @@
                             array_user_pv = [];
                         }
 
-                            array_user_pv.push({
+                        array_user_pv.push({
                             name: sender_name,
                             id: sender_id,
                             messages: []
