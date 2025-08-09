@@ -13,7 +13,7 @@
         // idClient = "doctor_6eb14e4f-e0dc-4497-b327-c525ae962338";
 
         idClient = idClient.replace("doctor_", "");
-        console.log( idClient );
+        // console.log( idClient );
         const user_id_connect_to_socket = (idClient && idClient.trim()) ? idClient.trim() : '0';
 
         // save id in section
@@ -30,9 +30,7 @@
 
         socket.on('connect', () => {
 
-
             //  ایا روی حات تست مود هستم یا خیر
-
 
             if ( test_mode == false )
             {
@@ -69,9 +67,7 @@
             }
             else
             {
-
                 $(".container_check_connection").removeClass("active");
-
             }
 
         });
@@ -156,6 +152,7 @@
 
                 if (data.message_mode == "preliminary_report")
                 {
+                    console.log( data );
 
                     // ----------------------
                     // get message and add to array array_user_pv
@@ -189,16 +186,21 @@
                                     text: item_new_messages.text,
                                     timestamp: item_new_messages.timestamp,
                                     new_or_old: item_new_messages.new_or_old,
-                                    role: item_new_messages.role
+                                    role: item_new_messages.role,
+                                    type_message: item_new_messages.type_message
                                 });
                             });
                             array_user_pv.push(user_pv);
+
                         })
 
                         // ----------------------
                         // creat pv
 
                         array_user_pv.forEach(function (itme, key) {
+
+
+                            // تعداد پیام های جدید را میشمارم
 
                             let count_message = 0;
                             let last_message = "";
@@ -209,6 +211,8 @@
                                     last_message = itme_message.text;
                                 }
                             })
+
+                            // اگر pv وجود نداشت میسازمش اگر وجود داشت ان را ادیت میکنم
 
                             let have_pv_or_no = getChatItemByIdPv(itme.id);
                             if (have_pv_or_no == null) {
@@ -232,9 +236,6 @@
                 else if (data.message_mode == "new_message")
                 {
 
-
-
-
                     // test -------------------------------------------
                     // sessionStorage.clear('array_user_pv');
                     // test -------------------------------------------
@@ -253,6 +254,7 @@
                     let _timestamp_ = sender_message[0].timestamp;
                     let _new_or_old_ = sender_message[0].new_or_old;
                     let _role_ = sender_message[0].role;
+                    let _type_message_ = sender_message[0].type_message;
 
                     // متغییر بررسی pv وجود دارد یا خیر
                     // حالت دیفالت وجود ندارد
@@ -278,7 +280,8 @@
                                     text: _text_,
                                     timestamp: _timestamp_,
                                     new_or_old: _new_or_old_,
-                                    role: _role_
+                                    role: _role_,
+                                    type_message: _type_message_,
                                 });
 
                                 sessionStorage.setItem('array_user_pv', JSON.stringify(array_user_pv));
@@ -298,9 +301,12 @@
 
                         var id_pv = $(".chat-header").attr("id_pv");
 
-                        if (id_pv == sender_id) {
-                            creat_message(_role_, _text_, _new_or_old_, _message_id_, sender_id)
-                        } else {
+                        if (id_pv == sender_id)
+                        {
+                            creat_message( _role_, _text_, _new_or_old_, _message_id_, sender_id , _type_message_ )
+                        }
+                        else
+                        {
                             const badgeHtml = $(`.chat-item[id_pv="${sender_id}"] .unread-badge`).html();
                             let unreadCount = Number(badgeHtml) || 0;
                             unreadCount += 1;
@@ -330,7 +336,8 @@
                                     text: _text_,
                                     timestamp: _timestamp_,
                                     new_or_old: _new_or_old_,
-                                    role: _role_
+                                    role: _role_,
+                                    type_message: _type_message_
                                 })
                             }
                         })
@@ -391,7 +398,6 @@
             target_pv.find(".chat-last-message").html(last_message);
         }
 
-
         // --------------------------------------------------------------------------------------------------------------------
         // switch pv
         // --------------------------------------------------------------------------------------------------------------------
@@ -438,7 +444,7 @@
             for (i = 0; i < save_id_message_from_sort.length; i++) {
                 for (e = 0; e < save_id_message_text.length; e++) {
                     if (save_id_message_text[e].message_id == save_id_message_from_sort[i]) {
-                        creat_message(save_id_message_text[e].role, save_id_message_text[e].text, save_id_message_text[e].new_or_old, save_id_message_text[e].message_id, id);
+                        creat_message(save_id_message_text[e].role, save_id_message_text[e].text, save_id_message_text[e].new_or_old, save_id_message_text[e].message_id, id , save_id_message_text[e].type_message );
                         break;
                     }
                 }
@@ -457,16 +463,37 @@
         // function sin query
         // --------------------------------------------------------------------------------------------------------------------
 
-        function creat_message(role, text, new_or_old, message_id, id_pv = "") {
+        function creat_message(role, text, new_or_old, message_id, id_pv = "" , type_message = "text" ) {
 
-            //  ساخت پیام
+            // console.log(type_message);
+            // console.log(role);
+
+
+            // اگر نوع پیام متن باشه
 
             let message_box = "";
-            if (role === "requester") {
-                message_box = `<div class="message received"> <div class="message-bubble"> ${text} </div> </div>`;
+
+            if( type_message == "text" )
+            {
+                //  ساخت پیام
+
+                if (role === "requester") {
+                    message_box = `<div class="message received"> <div class="message-bubble"> ${text} </div> </div>`;
+                } else {
+                    message_box = `<div class="message sent"> <div class="message-bubble"> ${text} </div> </div>`;
+                }
+
             } else {
-                message_box = `<div class="message sent"> <div class="message-bubble"> ${text} </div> </div>`;
+
+                let arr_image = text.split("__");
+
+                message_box = `<div class="container_image_message">
+                    <img src="https://n8n.nirweb.ir/webhook/6e703d1e-72a8-4c12-a3ad-85db9eef8e61/?id_image_=${arr_image[0]}" >
+                    <p> ${arr_image[1]} </p>
+                    </div>`;
+
             }
+
 
             //  اپند کردن پیام
 

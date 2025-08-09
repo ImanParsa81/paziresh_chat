@@ -14,13 +14,13 @@
     <div class="messages-container" id="messagesContainer">
 
         <?php
-            show_image("");
-            show_image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgnb3288Ih_3BYFuAdq1_eMWEVGN8TQliJKeIEeVn9XmCtXj5CCSte1fv5EwjJMnSu2hE&usqp=CAU");
-            show_image("https://ircdn.zhaket.com/resources/5dc9cc00eaec370009202762/6721fa4356fd1054660d82a2.png");
-            func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
-            func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
-            func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
-            func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
+//            show_image("");
+//            show_image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgnb3288Ih_3BYFuAdq1_eMWEVGN8TQliJKeIEeVn9XmCtXj5CCSte1fv5EwjJMnSu2hE&usqp=CAU");
+//            show_image("https://ircdn.zhaket.com/resources/5dc9cc00eaec370009202762/6721fa4356fd1054660d82a2.png");
+//            func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
+//            func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
+//            func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
+//            func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
         ?>
 
     </div>
