@@ -797,13 +797,130 @@ body {
     cursor: pointer;
 }
 
-
-
 .container_show_image .loader {
     /* یا استایل اسپینر دلخواه تو */
     font-size: 18px;
     color: #ffffff;
 }
+
+
+
+/* ----------------------------------------- */
+/* select image from send */
+
+
+ #image {
+     display: none;
+ }
+
+#selectButton {
+    padding: 9px;
+    font-size: 18px;
+    background: linear-gradient(45deg, #4a90e2, #357ABD);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    max-width: 100px;
+    min-width: 63px;
+}
+
+#selectButton:hover {
+    background: linear-gradient(45deg, #357ABD, #2a5c9f);
+    transform: scale(1.05);
+}
+
+/* مودال */
+.modal {
+    display: none; /* مخفی از ابتدا */
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease forwards;
+}
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.modal-content {
+    position: relative;
+    background: #fff;
+    padding: 25px 30px 40px;
+    border-radius: 16px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    animation: slideIn 0.3s ease forwards;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+@keyframes slideIn {
+    from {transform: translateY(-20px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+}
+/* عکس داخل مودال */
+.modal-content img {
+    max-width: 100%;
+    max-height: 250px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    object-fit: contain;
+}
+/* دکمه ارسال */
+#submitBtn {
+    padding: 12px 35px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 12px rgba(40, 167, 69, 0.5);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+#submitBtn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+/* دکمه بستن */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.close:hover {
+    color: #333;
+}
+
+
+.icon_send_message {
+    width: 100%;
+    max-width: 24px;
+    height: auto;
+}
+
+
+
+
 
 
 

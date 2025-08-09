@@ -51,7 +51,10 @@
                     callApi(
                         'https://n8n.nirweb.ir/webhook/get_first_chat',
                         'POST',
-                        {user_id: user_id_connect_to_socket.trim(), type_res: 'get_all_message'}
+                        {
+                            user_id: user_id_connect_to_socket.trim(),
+                            type_res: 'get_all_message'
+                        }
                     )
                         .then(data => {
                             if (data.res && data.res.length > 0) {
