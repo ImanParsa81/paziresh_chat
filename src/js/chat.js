@@ -27,22 +27,35 @@ jQuery(document).ready(function ($) {
     // نوشتن پیام
 
     $(".send-button").on("click", function (e) {
-        let Error = false;
+        send_message();
+    });
 
+
+    $('.message-input').on('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            send_message();
+        }
+    });
+    
+    
+    function send_message () {
+
+        let Error = false;
         let pv_focus = $(".chat-header").attr("id_pv");
         let text = $(".message-input").val();
-
         // بررسی خالی بودن
         if (!pv_focus || !text.trim()) {
             Error = true;
         }
-
         if ( Error != true ) {
             create_messahe(text , pv_focus);
             $(".message-input").val("");
         }
+        $(".message-input").css("height", "40px");
 
-    });
+    }
+
 
     // ساخت message و انتقال به پایین
 
