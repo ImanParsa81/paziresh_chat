@@ -267,11 +267,12 @@
 
                     // ایا pv وجود دارد یا خیر
 
-                    if (!array_user_pv || array_user_pv.length === 0) {   // ایا خالی است
-
+                    if (!array_user_pv || array_user_pv.length === 0)
+                    {   // ایا خالی است
                         find_pv = false;
-
-                    } else if ( Array.isArray(array_user_pv) ) {     // ایا ارایه است
+                    }
+                    else if ( Array.isArray(array_user_pv) )
+                    {    // ایا ارایه است
 
                         array_user_pv.forEach(function (item_, key_) {   // ایا در ارایه pv وجود دارد
 
@@ -299,6 +300,8 @@
 
                     if (find_pv == true)
                     {
+                        console.log("/*--*/")
+
                         // بررسی این که ایا فکوس هیتیم روی پیوی یا خیر
                         // اگر فوکوس نکردی دانتر براش بنداز
 
@@ -321,6 +324,8 @@
                     }
                     else
                     {
+                        console.log("/////////////////////////")
+
                         let array_user_pv = JSON.parse(sessionStorage.getItem('array_user_pv'));
                         if (!array_user_pv || array_user_pv.length === 0) {
                             array_user_pv = [];
@@ -490,10 +495,21 @@
 
                 let arr_image = text.split("__");
 
-                message_box = `<div class="container_image_message">
+                if (role === "requester") {
+
+                    message_box = `<div class="container_image_message_received"> <div class="container_image_message">
                     <img src="https://n8n.nirweb.ir/webhook/6e703d1e-72a8-4c12-a3ad-85db9eef8e61/?id_image_=${arr_image[0]}" >
                     <p> ${arr_image[1]} </p>
-                    </div>`;
+                    </div></div>`;
+
+                } else {
+
+                    message_box = `<div class="container_image_message_sent"> <div class="container_image_message">
+                    <img src="https://n8n.nirweb.ir/webhook/6e703d1e-72a8-4c12-a3ad-85db9eef8e61/?id_image_=${arr_image[0]}" >
+                    <p> ${arr_image[1]} </p>
+                    </div></div>`;
+
+                }
 
             }
 

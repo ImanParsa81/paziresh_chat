@@ -728,6 +728,17 @@ body {
      margin-bottom: 15px;
 }
 
+.container_image_message_sent {
+    display: flex;
+    align-items: start;
+    justify-content: end;
+}
+
+.container_image_message_sent .container_image_message {
+    background-color: #89bdff;
+}
+
+
 .container_image_message img {
     width: 100%;
     border-radius: 15px;
