@@ -493,7 +493,7 @@
 
             } else {
 
-                let arr_image = text.split("__");
+                let arr_image = text.split("__space_between__");
 
                 if (role === "requester") {
 

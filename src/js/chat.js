@@ -333,7 +333,7 @@ jQuery(document).ready(function ($) {
 
                 item.messages.push({
                     message_id: id_message,
-                    text: id_file+"__",
+                    text: id_file+"__space_between__",
                     timestamp: Math.floor(Date.now() / 1000),
                     new_or_old: false,
                     role: "Fixer",
